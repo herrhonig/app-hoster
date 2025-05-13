@@ -1,2 +1,3 @@
 # app-hoster
-Connect your app!
+---
+Web application dedicated to connect multiple mini-apps.
