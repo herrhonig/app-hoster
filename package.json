@@ -1,0 +1,16 @@
+{
+  "name": "app-hoster",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "platform-shell"
+  ],
+  "scripts": {
+    "dev": "echo 'start dev only for selected apps'",
+    "build": "npm run build -w platform && npm run build -w packages",
+    "lint": "eslint \"src/**/*.{vue,ts,tsx,js,jsx}\" --ignore-path .gitignore",
+    "lint:fix": "eslint \"src/**/*.{vue,ts,tsx,js,jsx}\" --fix",
+    "format": "prettier --write ."
+  }
+}

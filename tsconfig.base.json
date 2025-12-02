@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    // Не преобразовывать JSX — позволяет поддерживать React, Vue, Solid и др.
+    "jsx": "preserve",
+    // Сборщик сам конвертирует JSX в целевой runtime
+    "baseUrl": "."
+  }
+}
