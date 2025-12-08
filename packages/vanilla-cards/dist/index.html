@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <title>vanilla cards</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/vanilla-cards.846a8e9a.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header header">
+        <div class="header__inner">
+          <h1 class="header__title">Каталог товаров</h1>
+
+          <div class="header__controls controls">
+            <label class="controls__search" for="search">
+              <input id="search" class="controls__input" type="search" placeholder="Поиск по названию...">
+            </label>
+
+            <div class="controls__filters filters" role="tablist" aria-label="Фильтр по категориям">
+              <button class="filters__btn filters__btn--active" data-filter="all">
+                Все
+              </button>
+              <button class="filters__btn" data-filter="books">Книги</button>
+              <button class="filters__btn" data-filter="electronics">
+                Электроника
+              </button>
+              <button class="filters__btn" data-filter="home">Для дома</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="cards" aria-label="Список карточек">
+        <ul class="cards__list">
+          <!-- Пример карточки: data-name и data-category используются для поиска/фильтрации -->
+          <li class="cards__item card" data-name="Война и мир" data-category="books">
+            <article class="card__inner">
+              <div class="card__media" aria-hidden="true"></div>
+              <h3 class="card__title">Война и мир</h3>
+              <p class="card__meta">Толстой — Книги</p>
+            </article>
+          </li>
+
+          <li class="cards__item card" data-name="Беспроводные наушники" data-category="electronics">
+            <article class="card__inner">
+              <div class="card__media"></div>
+              <h3 class="card__title">Беспроводные наушники</h3>
+              <p class="card__meta">Аудио — Электроника</p>
+            </article>
+          </li>
+
+          <li class="cards__item card" data-name="Кофеварка турбо" data-category="home">
+            <article class="card__inner">
+              <div class="card__media"></div>
+              <h3 class="card__title">Кофеварка турбо</h3>
+              <p class="card__meta">Кухня — Для дома</p>
+            </article>
+          </li>
+        </ul>
+
+        <div class="cards__empty" hidden="">Ничего не найдено</div>
+      </section>
+    </main>
+
+    <script src="/vanilla-cards.94f59b99.js" defer=""></script>
+  
+
+<script src="/vanilla-cards.360ab2ab.js"></script></body></html>
