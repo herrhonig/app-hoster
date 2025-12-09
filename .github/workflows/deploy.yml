@@ -38,7 +38,8 @@ jobs:
                 username: ${{ secrets.APP_HOSTER_USER }}
                 source: "packages/react-counter/dist/*"
                 target: "/var/www/react-counter"
-                strip_components: 3
+                strip_components: 1
+
 
             - name: => restart nginx
               uses: appleboy/ssh-action@v1.0.0
