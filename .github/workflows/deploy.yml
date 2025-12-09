@@ -28,7 +28,18 @@ jobs:
             - name: => build app
               working-directory: packages/react-counter
               run: yarn build
-            
+
+            - name: => cleaning target dir before deploy
+              uses: appleboy/ssh-action@v0.1.7
+              with:
+                host: ${{ vars.SSH_HOST }}
+                port: ${{ vars.SSH_PORT }}
+                key: ${{ secrets.APP_HOSTER_SSH }}
+                username: ${{ secrets.APP_HOSTER_USER }}
+                script: |
+                    rm -rf /var/www/react-counter/*
+                    rm -rf /var/www/react-counter/.[!.]*
+        
             - name: => moving app build to VPS
               uses: appleboy/scp-action@v0.1.7
               with:
@@ -36,12 +47,12 @@ jobs:
                 port: ${{ vars.SSH_PORT }}
                 key: ${{ secrets.APP_HOSTER_SSH }}
                 username: ${{ secrets.APP_HOSTER_USER }}
-                source: "packages/react-counter/dist/*"
-                target: "/var/www/react-counter/"
-                strip_components: 0
+                source: "packages/react-counter/dist"
+                target: "/var/www/react-counter"
+                strip_components: 3
 
 
-            - name: => restart nginx
+            - name: => restarting nginx
               uses: appleboy/ssh-action@v1.0.0
               with:
                 host: ${{ vars.SSH_HOST }}
