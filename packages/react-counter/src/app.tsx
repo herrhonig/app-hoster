@@ -1,4 +1,5 @@
 import { useState } from "react";
+import bannerImg from "../assets/word-update.png";
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -41,7 +42,7 @@ export default function App() {
       {banner && (
         <div className="w-full h-full">
           <img
-            src="/assets/word-update.png"
+            src={bannerImg}
             alt="banner"
             className="w-64 absolute top-2 left-2.5"
           />
