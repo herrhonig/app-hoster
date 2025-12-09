@@ -37,9 +37,10 @@ jobs:
                 key: ${{ secrets.APP_HOSTER_SSH }}
                 username: ${{ secrets.APP_HOSTER_USER }}
                 script: |
-                    rm -rf /var/www/react-counter/*
-                    rm -rf /var/www/react-counter/.[!.]*
-        
+                    sudo rm -rf /var/www/react-counter
+                    sudo mkdir -p /var/www/react-counter
+                    sudo chown $USER:$USER /var/www/react-counter
+
             - name: => moving app build to VPS
               uses: appleboy/scp-action@v0.1.7
               with:
