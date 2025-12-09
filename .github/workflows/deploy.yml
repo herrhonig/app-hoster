@@ -36,8 +36,8 @@ jobs:
                 port: ${{ vars.SSH_PORT }}
                 key: ${{ secrets.APP_HOSTER_SSH }}
                 username: ${{ secrets.APP_HOSTER_USER }}
-                source: "packages/react-counter/dist/"
-                target: "/var/www/react-counter"
+                source: "packages/react-counter/dist/*"
+                target: "/var/www/react-counter/"
                 strip_components: 0
 
 
