@@ -1,0 +1,54 @@
+name: Deploy React Counter
+
+on:
+    push:
+        paths:
+            - packages/react-counter/**
+        branches: 
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node: [20.x]
+
+        steps:
+            - name: => checking out repository
+              uses: actions/checkout@v4
+            
+            - name: => setup node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{matrix.node}}
+
+            - name: => install deps
+              working-directory: packages/react-counter
+              run: yarn install --frozen-lockfile
+
+            - name: => build app
+              working-directory: packages/react-counter
+              run: yarn build
+            
+            - name: => moving app build to VPS
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                host: ${{ vars.SSH_HOST }}
+                port: ${{ vars.SSH_PORT }}
+                key: ${{ secrets.APP_HOSTER_SSH }}
+                username: ${{ secrets.APP_HOSTER_USER }}
+                source: "packages/react-counter/dist/*"
+                target: "/var/www/react-counter"
+                strip_components: 1
+
+            - name: => restart nginx
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                host: ${{ vars.SSH_HOST }}
+                port: ${{ vars.SSH_PORT }}
+                key: ${{ secrets.APP_HOSTER_SSH }}
+                username: ${{ secrets.APP_HOSTER_USER }}
+                script: |
+                    sudo systemctl reload nginx
+
