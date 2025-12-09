@@ -24,6 +24,13 @@ export default function App() {
           -
         </button>
       </div>
+      <br />
+      <br />
+      <div className="w-full bg-amber-300 h-4">
+        <div className="text-center text-amber-800 font-bold text-xl">
+          New updates!
+        </div>
+      </div>
     </div>
   );
 }
