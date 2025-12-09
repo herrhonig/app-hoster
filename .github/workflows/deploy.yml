@@ -2,8 +2,6 @@ name: Deploy React Counter
 
 on:
     push:
-        paths:
-            - packages/react-counter/**
         branches: 
             - main
 
