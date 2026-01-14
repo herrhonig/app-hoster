@@ -1,65 +1,82 @@
-name: Deploy React Counter
+name: Deploy React Counter App
 
 on:
-    push:
-        branches: 
-            - main
+  push:
+    paths:
+      - "packages/react-counter/**"
+      - "nginx/app-hoster.conf"
+      - "packages/react-counter/description.json"
+    branches:
+      - main
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node: [20.x]
+  deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: => checking out repository
-              uses: actions/checkout@v4
-            
-            - name: => setup node.js
-              uses: actions/setup-node@v4
-              with:
-                node-version: ${{matrix.node}}
+    steps:
+      - name: => Checkout repo
+        uses: actions/checkout@v4
 
-            - name: => install deps
-              working-directory: packages/react-counter
-              run: yarn install --frozen-lockfile
+      - name: => Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-            - name: => build app
-              working-directory: packages/react-counter
-              run: yarn build
-
-            - name: => cleaning target dir before deploy
-              uses: appleboy/ssh-action@v0.1.7
-              with:
-                host: ${{ vars.SSH_HOST }}
-                port: ${{ vars.SSH_PORT }}
-                key: ${{ secrets.APP_HOSTER_SSH }}
-                username: ${{ secrets.APP_HOSTER_USER }}
-                script: |
-                    sudo rm -rf /var/www/react-counter
-                    sudo mkdir -p /var/www/react-counter
-                    sudo chown $USER:$USER /var/www/react-counter
-
-            - name: => moving app build to VPS
-              uses: appleboy/scp-action@v0.1.7
-              with:
-                host: ${{ vars.SSH_HOST }}
-                port: ${{ vars.SSH_PORT }}
-                key: ${{ secrets.APP_HOSTER_SSH }}
-                username: ${{ secrets.APP_HOSTER_USER }}
-                source: "packages/react-counter/dist"
-                target: "/var/www/react-counter"
-                strip_components: 3
+      - name: => Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
 
-            - name: => restarting nginx
-              uses: appleboy/ssh-action@v1.0.0
-              with:
-                host: ${{ vars.SSH_HOST }}
-                port: ${{ vars.SSH_PORT }}
-                key: ${{ secrets.APP_HOSTER_SSH }}
-                username: ${{ secrets.APP_HOSTER_USER }}
-                script: |
-                    sudo systemctl reload nginx
+      - name: => Build Docker image
+        working-directory: packages/react-counter
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/react-counter:latest .
 
+      - name: => Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/react-counter:latest
+
+      - name: => Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ vars.HOST }}
+          port: ${{ vars.PORT }}
+          username: ${{ secrets.APP_HOSTER_USER }}
+          key: ${{ secrets.APP_HOSTER_SSH }}
+          script: |
+            # -------------------------
+            # Stop and remove old container if exists
+            # -------------------------
+            docker stop react-counter || true
+            docker rm react-counter || true
+
+            # -------------------------
+            # Cleanup old images
+            # -------------------------
+            docker image prune -f || true
+
+            # -------------------------
+            # Pull latest image
+            # -------------------------
+            docker pull ${{ secrets.DOCKER_USERNAME }}/react-counter:latest
+
+            # -------------------------
+            # Run container
+            # -------------------------
+            docker run -d \
+              --name react-counter \
+              --network hoster-net \
+              --restart=always \
+              -p 8080:80 \
+              ${{ secrets.DOCKER_USERNAME }}/react-counter:latest
+
+            # -------------------------
+            # Update Nginx config
+            # -------------------------
+            cp ~/app-hoster.conf /etc/nginx/sites-available/hoster-apps.conf
+            ln -sf /etc/nginx/sites-available/hoster-apps.conf /etc/nginx/sites-enabled/hoster-apps.conf
+
+            # -------------------------
+            # Test config and reload Nginx
+            # -------------------------
+            nginx -t && systemctl reload nginx

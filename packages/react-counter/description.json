@@ -1,0 +1,5 @@
+{
+  "type": "spa",
+  "port": 80,
+  "route": "/react-counter"
+}
