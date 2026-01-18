@@ -2,12 +2,10 @@ name: Deploy React Counter App
 
 on:
   push:
-    paths:
-      - "packages/react-counter/**"
-      - "nginx/app-hoster.conf"
-      - "packages/react-counter/description.json"
     branches:
       - main
+    paths:
+      - "packages/react-counter/**"
 
 jobs:
   deploy:
@@ -26,10 +24,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: => Build Docker image
-        working-directory: packages/react-counter
+      - name: => Build Docker image (from root!)
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/react-counter:latest .
+          docker build \
+          -f packages/react-counter/Dockerfile \
+          -t ${{ secrets.DOCKER_USERNAME }}/react-counter:latest .
 
       - name: => Push Docker image
         run: |
@@ -50,11 +49,6 @@ jobs:
             docker rm react-counter || true
 
             # -------------------------
-            # Cleanup old images
-            # -------------------------
-            docker image prune -f || true
-
-            # -------------------------
             # Pull latest image
             # -------------------------
             docker pull ${{ secrets.DOCKER_USERNAME }}/react-counter:latest
@@ -64,18 +58,6 @@ jobs:
             # -------------------------
             docker run -d \
               --name react-counter \
-              --network hoster-net \
               --restart=always \
               -p 8080:80 \
               ${{ secrets.DOCKER_USERNAME }}/react-counter:latest
-
-            # -------------------------
-            # Update Nginx config
-            # -------------------------
-            cp ~/app-hoster.conf /etc/nginx/sites-available/hoster-apps.conf
-            ln -sf /etc/nginx/sites-available/hoster-apps.conf /etc/nginx/sites-enabled/hoster-apps.conf
-
-            # -------------------------
-            # Test config and reload Nginx
-            # -------------------------
-            nginx -t && systemctl reload nginx
