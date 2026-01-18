@@ -2,10 +2,12 @@
   "name": "app-hoster",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "platform-shell"
-  ],
+  "workspaces": {
+    "packages": [
+      "react-counter",
+      "vanilla-cards"
+    ]
+  },
   "scripts": {
     "dev": "echo 'start dev only for selected apps'",
     "build": "npm run build -w platform && npm run build -w packages",

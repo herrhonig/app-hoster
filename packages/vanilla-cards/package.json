@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-cards",
+  "name": "@/vanilla-cards",
   "version": "1.0.0",
   "description": "test app",
   "author": "colspinner",
@@ -10,6 +10,7 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-sass": "2.16.3",
     "parcel": "^2.16.3",
     "sass": "^1.94.2"
   }

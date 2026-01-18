@@ -33,7 +33,7 @@ export default function App() {
       >
         <div
           onClick={toggleBanner}
-          className="text-center text-amber-800 font-bold text-xl"
+          className="text-center select-none text-amber-800 font-bold text-xl"
         >
           New updates!
         </div>
