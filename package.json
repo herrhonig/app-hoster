@@ -4,8 +4,7 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "react-counter",
-      "vanilla-cards"
+      "packages/*"
     ]
   },
   "scripts": {
