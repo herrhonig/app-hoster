@@ -234,6 +234,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@colspinner/trademark-gpt@workspace:packages/trademark-gpt":
+  version: 0.0.0-use.local
+  resolution: "@colspinner/trademark-gpt@workspace:packages/trademark-gpt"
+  dependencies:
+    "@tailwindcss/postcss": ^4.1.17
+    "@tailwindcss/vite": ^4.1.16
+    "@types/node": ^25.0.9
+    "@types/react": ^18.3.3
+    "@types/react-dom": ^18.3.3
+    "@vitejs/plugin-react": ^5.0.4
+    autoprefixer: ^10.4.22
+    react: ^18.3.1
+    react-dom: ^18.3.1
+    tailwindcss: ^4.1.16
+    typescript: ^5.6.0
+    vite: ^5.4.0
+    zustand: ^5.0.10
+  languageName: unknown
+  linkType: soft
+
 "@colspinner/vanilla-cards@workspace:packages/vanilla-cards":
   version: 0.0.0-use.local
   resolution: "@colspinner/vanilla-cards@workspace:packages/vanilla-cards"
@@ -2162,6 +2182,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^25.0.9":
+  version: 25.0.9
+  resolution: "@types/node@npm:25.0.9"
+  dependencies:
+    undici-types: ~7.16.0
+  checksum: 0dd245ed1823d32851007da980319af17f9794b0fe4b6b46093cee185e4c3ea033162238d2dc053b4474c1eeb534d47d2679a92907b5e7a27dac0938cb250c7a
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.15
   resolution: "@types/prop-types@npm:15.7.15"
@@ -2230,6 +2259,8 @@ __metadata:
 "app-hoster@workspace:.":
   version: 0.0.0-use.local
   resolution: "app-hoster@workspace:."
+  dependencies:
+    zustand: ^5.0.10
   languageName: unknown
   linkType: soft
 
@@ -3656,6 +3687,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 1ef68fc6c5bad200c8b6f17de8e5bc5cfdcadc164ba8d7208cd087cfa8583d922d8316a7fd76c9a658c22b4123d3ff847429185094484fbc65377d695c905857
+  languageName: node
+  linkType: hard
+
 "unique-filename@npm:^5.0.0":
   version: 5.0.0
   resolution: "unique-filename@npm:5.0.0"
@@ -3774,5 +3812,26 @@ __metadata:
   version: 5.0.0
   resolution: "yallist@npm:5.0.0"
   checksum: eba51182400b9f35b017daa7f419f434424410691bbc5de4f4240cc830fdef906b504424992700dc047f16b4d99100a6f8b8b11175c193f38008e9c96322b6a5
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^5.0.10":
+  version: 5.0.10
+  resolution: "zustand@npm:5.0.10"
+  peerDependencies:
+    "@types/react": ">=18.0.0"
+    immer: ">=9.0.6"
+    react: ">=18.0.0"
+    use-sync-external-store: ">=1.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+    use-sync-external-store:
+      optional: true
+  checksum: 52d39ad5a0a496a443ced50e773a47df4bda4f718c96e45a08c92675e45d7ac77ce75903b8e3754f17a2e99c71f5864ae8c2b2477aeb4c6f5c2a19e3e64e57ba
   languageName: node
   linkType: hard
