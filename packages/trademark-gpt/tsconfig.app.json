@@ -4,7 +4,7 @@
     "types": ["vite/client"]
   },
   "paths": {
-    "@/*": ["src/*"]
+    "@/*": ["./src/*"]
   },
   "include": ["src"],
   "extends": "../../tsconfig.base.json"
