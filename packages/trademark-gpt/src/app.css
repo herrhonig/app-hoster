@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+body {
+  @apply bg-gray-100 text-gray-900;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #222;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0.5em 0;
+}
+
+a {
+  color: #3366ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
