@@ -1,5 +1,6 @@
-import { useChatStore } from "@/store/chat.store";
-import { v4 as uuid } from "@/utils/uuid";
+import { uuid } from "../shared/helpers/uuid";
+import { useChatStore } from "../store";
+
 import { pushChunk } from "./buffer";
 
 let intervalId: number | null = null;
@@ -9,7 +10,7 @@ export function startMockGeneration(words = 10000) {
 
   store.addMessage({
     id: uuid(),
-    role: "assistant",
+    role: "agent",
     content: "",
   });
 
@@ -32,18 +33,18 @@ export function startMockGeneration(words = 10000) {
   }, 10);
 }
 
-export function stopGeneration() {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-  }
-  useChatStore.getState().stop();
-}
-
 function generateChunk() {
   return (
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
     "**Bold text** " +
     "```const x = 42``` "
   );
+}
+
+export function stopGeneration() {
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+  useChatStore.getState().stop();
 }
