@@ -1,11 +1,16 @@
+import { generateChunk } from "../shared/helpers/mock";
 import { uuid } from "../shared/helpers/uuid";
 import { useChatStore } from "../store";
-
 import { pushChunk } from "./buffer";
 
 let intervalId: number | null = null;
 
-export function startMockGeneration(words = 10000) {
+// сколько слов в одном чанке
+const WORDS_PER_CHUNK = 20;
+// интервал стриминга (экстремально быстро)
+const STREAM_INTERVAL = 15;
+
+export function startMockGeneration(targetWords = 10000) {
   const store = useChatStore.getState();
 
   store.addMessage({
@@ -14,37 +19,32 @@ export function startMockGeneration(words = 10000) {
     content: "",
   });
 
-  let generated = 0;
+  let generatedWords = 0;
 
   intervalId = window.setInterval(() => {
-    if (!useChatStore.getState().isGenerating) {
+    const { isGenerating } = useChatStore.getState();
+
+    if (!isGenerating) {
       stopGeneration();
       return;
     }
 
-    const chunk = generateChunk();
-    generated += chunk.split(" ").length;
+    const chunk = generateChunk(WORDS_PER_CHUNK);
+    generatedWords += WORDS_PER_CHUNK;
 
     pushChunk(chunk);
 
-    if (generated >= words) {
+    if (generatedWords >= targetWords) {
       stopGeneration();
     }
-  }, 10);
-}
-
-function generateChunk() {
-  return (
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-    "**Bold text** " +
-    "```const x = 42``` "
-  );
+  }, STREAM_INTERVAL);
 }
 
 export function stopGeneration() {
-  if (intervalId) {
+  if (intervalId !== null) {
     clearInterval(intervalId);
     intervalId = null;
   }
+
   useChatStore.getState().stop();
 }

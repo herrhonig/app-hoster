@@ -7,7 +7,7 @@ export function ChatInput() {
   const isGenerating = useChatStore((state) => state.isGenerating);
 
   return (
-    <div className="flex gap-2 border-t p-3">
+    <div className="flex sticky bottom-0 z-30 bg-red-100 gap-2 border-t p-3 mt-auto">
       <Textarea
         placeholder="Ask something..."
         rows={2}
@@ -21,7 +21,12 @@ export function ChatInput() {
       )}
 
       {!isGenerating && (
-        <Button onClick={() => startMockGeneration()}>Generate</Button>
+        <Button
+          className="bg-amber-600 text-white"
+          onClick={() => startMockGeneration()}
+        >
+          Generate
+        </Button>
       )}
     </div>
   );

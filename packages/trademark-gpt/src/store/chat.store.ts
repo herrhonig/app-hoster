@@ -23,6 +23,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   appendToLastMessage: (chunk) =>
     set((state) => {
+      console.log({ storeChunk: chunk });
+
       const last = state.messages[state.messages.length - 1];
       if (!last) return state;
 

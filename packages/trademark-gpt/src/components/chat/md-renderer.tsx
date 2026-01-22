@@ -4,7 +4,7 @@ export function MarkdownRenderer({ tokens }: { tokens?: MarkdownToken[] }) {
   if (!tokens) return null;
 
   return (
-    <div className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+    <div className="whitespace-pre-wrap wrap-break-words text-sm h-[90px] leading-relaxed">
       {tokens.map((t, i) => {
         switch (t.type) {
           case "bold":
