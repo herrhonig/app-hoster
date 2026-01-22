@@ -10,7 +10,6 @@ function flush() {
   const last = messages[messages.length - 1];
 
   if (!last) return;
-  console.log({ buffer });
 
   if (buffer) {
     store.appendToLastMessage(buffer);

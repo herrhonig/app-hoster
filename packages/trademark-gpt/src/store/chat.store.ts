@@ -4,15 +4,19 @@ import type { Message } from "./message.schema";
 type ChatState = {
   messages: Message[];
   isGenerating: boolean;
+  // streamingMessage: Message | null; // mutable, isolated
 
   addMessage: (msg: Message) => void;
   appendToLastMessage: (chunk: string) => void;
+  // appendChunk: (chunk: string) => void;
   setTokens: (id: string, tokens: Message["tokens"]) => void;
   stop: () => void;
+  clear: () => void;
 };
 
 export const useChatStore = create<ChatState>((set, get) => ({
   messages: [],
+  // streamingMessage: null,
   isGenerating: false,
 
   addMessage: (msg) =>
@@ -44,4 +48,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
     })),
 
   stop: () => set({ isGenerating: false }),
+  clear: () => set({ messages: [] }),
 }));
+
+/**
+ *  appendChunk: (chunk) =>
+    set((state) => {
+      if (!state.streamingMessage) return;
+      state.streamingMessage.content += chunk;
+    }),
+
+ */

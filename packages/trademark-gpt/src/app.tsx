@@ -1,14 +1,15 @@
-import { ChatInput } from "./components/chat/chat-input";
-import { ChatView } from "./components/chat/chat-view";
+import { Chat } from "./components/chat/chat";
 
 export default function App() {
   return (
-    <div className="flex flex-col h-full items-center p-12">
-      <h1 className="text-2xl font-bold">Trademark Gpt</h1>
-      <div className="flex  flex-col">
-        <ChatView />
-        <ChatInput />
+    <>
+      {/* <FpsComponent /> */}
+      <div className="bg-amber-800 flex flex-col w-full items-center min-h-screen p-12">
+        <div>
+          <h1 className="text-2xl text-center font-bold">Trademark Gpt</h1>
+        </div>{" "}
+        <Chat />
       </div>
-    </div>
+    </>
   );
 }

@@ -1,32 +1,61 @@
+import { cn } from "../../shared/helpers/cn";
 import { Button } from "../../shared/ui/button";
 import { Textarea } from "../../shared/ui/textarea";
-import { useChatStore } from "../../store";
-import { startMockGeneration, stopGeneration } from "../../streaming/generator";
 
-export function ChatInput() {
-  const isGenerating = useChatStore((state) => state.isGenerating);
-
+type ChatInputProps = {
+  className?: string;
+  isGenerating: boolean;
+  onRestoreChat?: () => void;
+  onStartMockGeneration: () => void;
+  onStopMockGeneration: () => void;
+};
+export function ChatInput({
+  className = "",
+  isGenerating,
+  onRestoreChat = undefined,
+  onStartMockGeneration,
+  onStopMockGeneration,
+}: ChatInputProps) {
   return (
-    <div className="flex sticky bottom-0 z-30 bg-red-100 gap-2 border-t p-3 mt-auto">
+    <div
+      className={cn(
+        "flex items-center opacity-100 z-30 self-center bg-red-100 rounded-4xl gap-2 p-3",
+        className,
+      )}
+    >
       <Textarea
+        name="chat-input"
         placeholder="Ask something..."
+        className="rounded-3xl"
         rows={2}
         disabled={isGenerating}
       />
 
       {isGenerating && (
-        <Button onClick={stopGeneration} className="bg-red-500">
+        <Button
+          onClick={onStopMockGeneration}
+          className="bg-red-500 rounded-full"
+        >
           Stop
         </Button>
       )}
 
       {!isGenerating && (
-        <Button
-          className="bg-amber-600 text-white"
-          onClick={() => startMockGeneration()}
-        >
-          Generate
-        </Button>
+        <>
+          {onRestoreChat && (
+            <Button onClick={onRestoreChat} className="bg-red-500 rounded-2xl">
+              Clear
+            </Button>
+          )}
+          <Button
+            className={cn("bg-cyan-950 text-white rounded-2xl", {
+              "select-none": isGenerating,
+            })}
+            onClick={() => onStartMockGeneration()}
+          >
+            Generate
+          </Button>
+        </>
       )}
     </div>
   );

@@ -4,7 +4,7 @@ export function MarkdownRenderer({ tokens }: { tokens?: MarkdownToken[] }) {
   if (!tokens) return null;
 
   return (
-    <div className="whitespace-pre-wrap wrap-break-words text-sm h-[90px] leading-relaxed">
+    <div className="wrap-break-words text-sm h-[90px] leading-relaxed">
       {tokens.map((t, i) => {
         switch (t.type) {
           case "bold":
@@ -17,7 +17,7 @@ export function MarkdownRenderer({ tokens }: { tokens?: MarkdownToken[] }) {
             return (
               <pre
                 key={i}
-                className="my-2 overflow-x-auto rounded bg-zinc-900 p-2 text-xs text-zinc-100"
+                className="my-2 overflow-x-auto rounded bg-indigo-950 p-2 text-xs text-zinc-100"
               >
                 <code>{t.value}</code>
               </pre>
