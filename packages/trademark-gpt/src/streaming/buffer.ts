@@ -15,7 +15,6 @@ function flush() {
     store.appendToLastMessage(buffer);
     buffer = "";
 
-    // 👇 markdown парсинг ПОСЛЕ апдейта
     scheduleMarkdownParse(last.id, last.content);
   }
 

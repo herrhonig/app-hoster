@@ -245,8 +245,11 @@ __metadata:
     "@types/react-dom": ^18.3.3
     "@vitejs/plugin-react": ^5.0.4
     autoprefixer: ^10.4.22
+    clsx: ^2.1.1
     react: ^18.3.1
     react-dom: ^18.3.1
+    react-window: ^2.2.5
+    tailwind-merge: ^3.4.0
     tailwindcss: ^4.1.16
     typescript: ^5.6.0
     vite: ^5.4.0
@@ -2380,6 +2383,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -3378,6 +3388,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-window@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "react-window@npm:2.2.5"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  checksum: 10d384ca4872f8ba8559e4f2ae2c0e41712823022c307f23efb890bc79a06342fb7a55fc5e1b7af65c300627e2e843021360a6177ce54b0195f1d708fa4c645e
+  languageName: node
+  linkType: hard
+
 "react@npm:^18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
@@ -3606,6 +3626,13 @@ __metadata:
   dependencies:
     has-flag: ^4.0.0
   checksum: 3dda818de06ebbe5b9653e07842d9479f3555ebc77e9a0280caf5a14fb877ffee9ed57007c3b78f5a6324b8dbeec648d9e97a24e2ed9fdb81ddc69ea07100f4a
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "tailwind-merge@npm:3.4.0"
+  checksum: 172d0bc19af4512e037e481354e9038211b2748f1a96f51a6c33559aec2fc4230e6ad52c0b16c4ccc03d8392b87781a615cd1b93badcbd6333b160eb5aca30f7
   languageName: node
   linkType: hard
 
